@@ -25,3 +25,16 @@ jobs:
       run: npm run test:unit
     - name: Display SoftUni username
       run: echo "milagg"
+
+  deploy:
+  
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: build_test
+
+    steps:   
+    - name: Deploy to production
+      uses: JorgeLNJunior/render-deploy@v1.4.4
+      with:
+        service_id: ${{ secrets.RENDER_SERVICE_ID }}
+        api_key: ${{ secrets.RENDER_API_KEY }}        
